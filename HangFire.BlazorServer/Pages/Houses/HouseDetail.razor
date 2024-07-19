@@ -1,0 +1,42 @@
+﻿@page "/house/{EntityId:int}"
+
+@using HangFire.Domain.Entities;
+@using HangFire.BlazorServer.Shared;
+
+<MudForm @ref="Form" @bind-IsValid="@success">
+    <MudPaper Class="pa-4">
+        <MudGrid>
+            <MudItem xs="12" md="8" lg="8">
+                <MudTextField @bind-Value="House!.Name" @attributes="@Splats.TextRequired(nameof(House.Name))" For="@(() => House!.Name)" />
+            </MudItem>
+            <MudItem xs="12" md="4" lg="4">
+                <MudCheckBox @bind-Value="House!.IsSold" @attributes="@Splats.CheckBox(nameof(House.IsSold))" For="@(() => House!.IsSold)" />
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" md="12" lg="12">
+                <MudTextField @bind-Value="House!.Description" @attributes="@Splats.TextOptional(nameof(House.Description))" For="@(() => House!.Description)" />
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" md="6" lg="6">
+                <MudNumericField @bind-Value="@House!.Bed" @attributes='Splats.NumericRequired("Bed")' />
+            </MudItem>
+            <MudItem xs="12" md="6" lg="6">
+                <MudNumericField @bind-Value="@House!.Bath" @attributes='Splats.NumericRequired("Bath")' />
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" md="6" lg="6">
+                <MudNumericField @bind-Value="@House!.SquareFeet" @attributes='Splats.NumericRequired("SquareFeet")' />
+            </MudItem>
+            <MudItem xs="12" md="6" lg="6">
+                <MudNumericField @bind-Value="@House!.ListingPrice" @attributes='Splats.NumericRequired("ListingPrice")' />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+    <MudPaper Class="pa-4">
+        <MudButton @attributes="Splats.CancelButton()" OnClick="@(() => Cancel("houses"))">Cancel</MudButton>
+        <MudButton @attributes="Splats.SaveButton()" OnClick="@(() => Update())">Update</MudButton>
+    </MudPaper>
+</MudForm>

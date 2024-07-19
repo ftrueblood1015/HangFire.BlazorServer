@@ -1,0 +1,33 @@
+﻿@page "/houses"
+
+@using HangFire.Domain.Entities;
+@using HangFire.BlazorServer.Shared;
+
+<MudText @attributes='Splats.PageHeader("HouseSummary")'>House Summary</MudText>
+
+<MudDataGrid @attributes='Splats.DataGrid("HouseSummary")' T="House" MultiSelection="true" Items="Entities" SortMode="SortMode.Multiple"
+             Filterable="true" QuickFilter="@_quickFilter">
+    <ToolBarContent>
+        <MudSpacer />
+        <MudTextField @attributes='Splats.SearchField()' @bind-Value="_searchString" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Name" Title="Name" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.Description" Title="Description" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.Bed" Title="Bed" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.Bath" Title="Bath" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.SquareFeet" Title="Square Feet" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.ListingPrice" Title="Price" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.IsSold" Title="Sold?" Sortable="false" Filterable="false" />
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton @attributes="Splats.ViewButton()" Size="@Size.Small" OnClick="@(() => Edit(context.Item, "house"))">View</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="House" />
+    </PagerContent>
+</MudDataGrid>
