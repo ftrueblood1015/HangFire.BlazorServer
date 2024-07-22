@@ -1,5 +1,6 @@
 using HangFire.BlazorServer.Data;
 using HangFire.Infrastructure;
+using HangFire.Services.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
@@ -18,6 +19,13 @@ builder.Services.AddDbContext<HangFireBlazorServerDbContext>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var config = new ConfigurationBuilder().AddJsonFile($"appsettings.{env}.json").AddEnvironmentVariables().Build();
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(config.GetValue<string>("AppBaseUrl")!) });
+builder.Services.AddScoped(sp => new ScryfallApiServerClient(new HttpClient { BaseAddress = new Uri(config.GetValue<string>("ScryfallApiServerBaseUrl")!) }));
+
 
 builder.Services.AddMudServices(config =>
 {

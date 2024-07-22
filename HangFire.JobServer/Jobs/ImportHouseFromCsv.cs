@@ -10,9 +10,9 @@ namespace HangFire.JobServer.Jobs
     {
         private readonly IHouseService _houseService;
 
-        public static string JobName = "Import House From Csv";
+        public static new string JobName = "Import House From Csv";
 
-        public static string CronExpress = Cron.Minutely();
+        public static new string CronExpress = Cron.Minutely();
 
         public ImportHouseFromCsv(IHouseService houseService) : base(JobName, CronExpress)
         {

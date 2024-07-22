@@ -2,6 +2,7 @@ using Hangfire;
 using Hangfire.LiteDB;
 using HangFire.Infrastructure;
 using HangFire.JobServer;
+using HangFire.Services.Services;
 using Microsoft.EntityFrameworkCore;
 using NetCore.AutoRegisterDi;
 using System.Reflection;
@@ -28,6 +29,12 @@ builder.Services.AddHangfire(configuration => configuration
 builder.Services.AddHangfireServer();
 
 ConfigureAutoMapper(builder);
+
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var config = new ConfigurationBuilder().AddJsonFile($"appsettings.{env}.json").AddEnvironmentVariables().Build();
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(config.GetValue<string>("AppBaseUrl")!) });
+builder.Services.AddScoped(sp => new ScryfallApiServerClient(new HttpClient { BaseAddress = new Uri(config.GetValue<string>("ScryfallApiServerBaseUrl")!) }));
 
 InjectPatternFromAssemblies(builder, "Repository");
 InjectPatternFromAssemblies(builder, "Service");
