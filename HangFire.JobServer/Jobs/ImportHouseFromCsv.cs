@@ -47,7 +47,7 @@ namespace HangFire.JobServer.Jobs
                 }
 
                 SaveAllRecords(records);
-                ArchiveAndDeleteFile(filePath);
+                BackgroundJob.Enqueue(() => ArchiveAndDeleteFile(filePath));
             }
             catch (Exception ex)
             {
@@ -55,13 +55,13 @@ namespace HangFire.JobServer.Jobs
             }
         }
 
-        private void SaveAllRecords(List<House> records)
+        public void SaveAllRecords(List<House> records)
         {
             try
             {
                 foreach (var record in records)
                 {
-                    _houseService.Add(record);
+                    BackgroundJob.Enqueue(() => _houseService.Add(record));
                 }
             }
             catch (Exception ex)
@@ -70,21 +70,25 @@ namespace HangFire.JobServer.Jobs
             }
         }
 
-        private void ArchiveAndDeleteFile(string filePath)
+        public void ArchiveAndDeleteFile(string filePath)
         {
-            try
-            {
-                FileInfo file = new FileInfo(filePath);
-                File.Copy(file.FullName, $"c:\\temp\\HangFireCsvFiles\\Homes\\Archive\\{file.Name}_{DateTime.Now.ToString("yyyyMMddHHmmss")}");
-                file.Delete();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{JobName} Failed: {ex}");
-            }
+            BackgroundJob.Enqueue(() => ArchiveFile(filePath));
         }
 
-        private IEnumerable<string> GetAllFiles()
+        public void ArchiveFile(string filePath)
+        {
+            FileInfo file = new FileInfo(filePath);
+            File.Copy(file.FullName, $"c:\\temp\\HangFireCsvFiles\\Homes\\Archive\\{file.Name}_{DateTime.Now.ToString("yyyyMMddHHmmss")}");
+            BackgroundJob.Enqueue(() => DeleteFile(filePath));
+        }
+
+        public void DeleteFile(string filePath)
+        {
+            FileInfo file = new FileInfo(filePath);
+            file.Delete();
+        }
+
+        public IEnumerable<string> GetAllFiles()
         {
             return Directory.GetFiles("c:\\temp\\HangFireCsvFiles\\Homes", "*.csv");
         }

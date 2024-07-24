@@ -1,7 +1,6 @@
 ﻿using HangFire.Domain.Entities;
 using HangFire.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace HangFire.BlazorServer.Pages.MtgCards
 {
@@ -9,12 +8,6 @@ namespace HangFire.BlazorServer.Pages.MtgCards
     {
         [Inject]
         protected IMtgCardService? Service { get; set; }
-
-        [Inject]
-        private IDialogService? DialogService { get; set; }
-
-        [Inject]
-        private ISnackbar? SnackbarService { get; set; }
 
         [Inject]
         private NavigationManager? NavigationManager { get; set; }
