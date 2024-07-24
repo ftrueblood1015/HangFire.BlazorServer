@@ -69,7 +69,7 @@ namespace HangFire.Domain.Models
         public int penny_rank { get; set; }
         public string? power { get; set; }
         public string? toughness { get; set; }
-        public bool produced_mana { get; set; }
+        public string[]? produced_mana { get; set; }
         public Prices? prices { get; set; }
         public Related_Uris? related_uris { get; set; }
         public Purchase_Uris? purchase_uris { get; set; }

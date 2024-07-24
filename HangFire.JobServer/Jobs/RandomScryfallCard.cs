@@ -11,9 +11,9 @@ namespace HangFire.JobServer.Jobs
 
         protected readonly IScryfallService ScryfallService;
 
-        public static new string JobName = "Import Card From Scryfall";
+        public static string JobName = "Import Card From Scryfall";
 
-        public static new string CronExpress = Cron.Minutely();
+        public static string CronExpress = Cron.Minutely();
 
         public RandomScryfallCard(IMtgCardService mtgCardService, IScryfallService scryfallService)
         {
@@ -36,8 +36,9 @@ namespace HangFire.JobServer.Jobs
         {
             try
             {
-                MtgCard mtgCard = card.ScryfallTransform();
-                CardService.Add(mtgCard);
+                MtgCard mtgCard = new MtgCard();
+                mtgCard = card.ScryfallTransform();
+                BackgroundJob.Enqueue(() => CardService.Add(mtgCard));
             }
             catch (Exception ex)
             {

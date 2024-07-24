@@ -12,6 +12,7 @@ namespace HangFire.Services
 
             string rawData = await client.Client.GetStringAsync(uri);
 
+            
             var data = JsonConvert.DeserializeObject<T>(rawData);
 
             if (data == null)

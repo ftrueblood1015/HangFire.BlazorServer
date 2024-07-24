@@ -1,0 +1,32 @@
+﻿@page "/cards"
+
+@using HangFire.Domain.Entities;
+@using HangFire.BlazorServer.Shared;
+
+<MudText @attributes='Splats.PageHeader("MtgCardSummary")'>House Summary</MudText>
+
+<MudDataGrid @attributes='Splats.DataGrid("MtgCardSummary")' T="MtgCard" MultiSelection="true" Items="Entities" SortMode="SortMode.Multiple"
+             Filterable="true" QuickFilter="@_quickFilter">
+    <ToolBarContent>
+        <MudSpacer />
+        <MudTextField @attributes='Splats.SearchField()' @bind-Value="_searchString" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Name" Title="Name" Sortable="false" Filterable="false" />
+        <PropertyColumn Property="x => x.Rarity" Sortable="true" Filterable="false" />
+        <PropertyColumn Property="x => x.Type" Sortable="true" Filterable="false" />
+        <PropertyColumn Property="x => x.ConvertedManaCost" Sortable="true" Filterable="false" />
+        <PropertyColumn Property="x => x.PennyRank" Sortable="true" Filterable="false" />
+        <PropertyColumn Property="x => x.EdhrecRank" Sortable="true" Filterable="false" />
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton @attributes="Splats.ViewButton()" Size="@Size.Small" OnClick="@(() => View(context.Item))">View</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="MtgCard" />
+    </PagerContent>
+</MudDataGrid>

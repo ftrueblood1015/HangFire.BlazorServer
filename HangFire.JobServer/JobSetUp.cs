@@ -12,6 +12,7 @@ namespace HangFire.JobServer
 
             recurringJobManage.AddOrUpdate<ImportHouseFromCsv>(ImportHouseFromCsv.JobName, ImportHouseFromCsv => ImportHouseFromCsv.RunJob(), ImportHouseFromCsv.CronExpress);
             recurringJobManage.AddOrUpdate<RandomScryfallCard>(RandomScryfallCard.JobName, RandomScryfallCard => RandomScryfallCard.RunJob(), RandomScryfallCard.CronExpress);
+            recurringJobManage.AddOrUpdate<MultipleRandomScryfallCards>(MultipleRandomScryfallCards.JobName, MultipleRandomScryfallCards => MultipleRandomScryfallCards.RunJob(), MultipleRandomScryfallCards.CronExpress);
         }
     }
 }

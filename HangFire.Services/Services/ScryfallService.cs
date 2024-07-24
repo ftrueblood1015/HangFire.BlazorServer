@@ -18,6 +18,7 @@ namespace HangFire.Services.Services
         {
             try
             {
+                Thread.Sleep(75);
                 var url = new Uri("cards/random", UriKind.Relative);
                 var mtgCard = await ScryfallClient.GetData<ScryfallMtgCard>(url);
                 return mtgCard!;

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HangFire.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HangFire.JobServer", "HangFire.JobServer\HangFire.JobServer.csproj", "{E40616E1-28F2-4362-A0D3-3C180D7071E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire.Services", "HangFire.Services\HangFire.Services.csproj", "{EB81ED57-7D80-43CB-BAF5-6599E675178F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HangFire.Services", "HangFire.Services\HangFire.Services.csproj", "{EB81ED57-7D80-43CB-BAF5-6599E675178F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
